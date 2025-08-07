@@ -1,105 +1,140 @@
 # Solar Panel Fault Detection using CNN
 
-This project implements a Convolutional Neural Network (CNN) to automatically detect faults in solar panels from images. The model classifies images into six fault categories to aid in predictive maintenance and improve solar energy efficiency.
+This project is focused on classifying various types of faults in solar panels using a Convolutional Neural Network (CNN). The goal is to automate the detection of common issues such as dust, physical damage, and electrical damage that impact the efficiency of solar panels.
+
+---
 
 ## Project Overview
 
-* **Type:** Image Classification using CNN
-* **Model:** Custom-built CNN in TensorFlow/Keras
-* **Classes:**
+* **Objective**: Develop a deep learning model that classifies solar panel images into specific fault categories.
+* **Methodology**: A custom CNN is trained from scratch to recognize visual patterns associated with different fault types.
+* **Platform**: Developed and tested in Google Colab using TensorFlow/Keras.
 
-  * Bird-drop
-  * Clean
-  * Dusty
-  * Electrical-damage
-  * Physical-Damage
-  * Snow-Covered
+---
 
-## Directory Structure
+## Dataset Details
+
+The dataset contains labeled images of solar panels across six categories:
+
+* **Bird-drop**
+* **Clean**
+* **Dusty**
+* **Electrical-damage**
+* **Physical-Damage**
+* **Snow-Covered**
+
+### Folder Structure
 
 ```
-solar-panel-fault-detection/
-├── cnn.ipynb                # Jupyter Notebook with full implementation
-├── README.md                # Project overview and instructions
-└── (dataset not included due to size)
+dataset/
+├── train/
+│   ├── Bird-drop/
+│   ├── Clean/
+│   ├── Dusty/
+│   ├── Electrical-damage/
+│   ├── Physical-Damage/
+│   └── Snow-Covered/
+└── test/
+    ├── Bird-drop/
+    ├── Clean/
+    ├── Dusty/
+    ├── Electrical-damage/
+    ├── Physical-Damage/
+    └── Snow-Covered/
 ```
 
-## Key Features
+*Note: The dataset is not included in the GitHub repository due to size limitations. It is loaded from Google Drive within the notebook.*
 
-* Preprocessing using `ImageDataGenerator` with rescaling and augmentation
-* CNN architecture with Conv2D, MaxPooling, Dropout, and Dense layers
-* Model trained with Categorical Crossentropy loss and Adam optimizer
-* Evaluation metrics include accuracy and loss plots
+---
 
 ## Model Architecture
 
-```
-Input Layer (150x150x3)
-→ Conv2D → ReLU → MaxPooling
-→ Conv2D → ReLU → MaxPooling
-→ Flatten → Dense → Dropout
-→ Dense → Output Layer (Softmax)
-```
+A Convolutional Neural Network (CNN) is used with the following architecture:
 
-## Sample Code Snippet
+* **Input Shape**: 224 x 224 x 3 RGB images
+* **Conv2D + MaxPooling + Dropout** layers (3 blocks)
+* **Flatten**
+* **Dense Layer (ReLU)**
+* **Output Layer**: 6 neurons with Softmax activation (for 6 classes)
 
-```python
-model = Sequential([
-    Conv2D(32, (3,3), activation='relu', input_shape=(150,150,3)),
-    MaxPooling2D(2,2),
-    Conv2D(64, (3,3), activation='relu'),
-    MaxPooling2D(2,2),
-    Flatten(),
-    Dense(128, activation='relu'),
-    Dropout(0.5),
-    Dense(6, activation='softmax')
-])
-```
+The model is compiled with:
 
-## Dataset
+* **Loss Function**: `categorical_crossentropy`
+* **Optimizer**: `adam`
+* **Metrics**: `accuracy`
 
-* **Format:** Directory-structured image dataset
-* **Location:** Not uploaded to GitHub (available via request or external link)
-* **Image Size:** 150x150 RGB
+---
 
-## Results
+## Training Summary
 
-* Achieved high accuracy on validation and test sets
-* Model effectively distinguishes between various types of solar panel faults
+* **Training Accuracy**: \~99%
+* **Validation Accuracy**: \~92%
+* **Smooth training convergence**, minimal overfitting
 
-## Installation & Setup
+Training and validation graphs (accuracy and loss) are included in the notebook.
 
-1. Clone the repository:
+---
+
+## Evaluation and Results
+
+The notebook includes:
+
+* **Classification Report**: Precision, Recall, F1-score for each class
+* **Confusion Matrix**
+* **Visual Predictions**: Random test images with predicted and true labels
+
+The model performs well across all fault categories, demonstrating strong generalization on unseen data.
+
+---
+
+## How to Run
+
+1. **Clone the repository:**
 
    ```bash
    git clone https://github.com/2004harsha/solar-panel-fault-detection.git
    cd solar-panel-fault-detection
    ```
 
-2. Install dependencies:
+2. **Open the notebook:**
+
+   * `solar_fault_detection.ipynb`
+
+3. **In Google Colab:**
+
+   * Mount your Google Drive to access the dataset:
+
+     ```python
+     from google.colab import drive
+     drive.mount('/content/drive')
+     ```
+
+4. **Install required packages (if not already installed):**
 
    ```bash
-   pip install -r requirements.txt  # if requirements file is added
-   # or manually install
-   pip install tensorflow matplotlib numpy
+   pip install tensorflow opencv-python
    ```
 
-3. Run the notebook:
-
-   ```bash
-   jupyter notebook cnn.ipynb
-   ```
-
-## Future Work
-
-* Deploy as a web app using Flask or Streamlit
-* Automate fault alerts with confidence thresholds
-
-## License
-
-This project is for educational use. All rights belong to the respective dataset creators.
+5. **Run all cells** in the notebook. Ensure the dataset path is correct and matches the expected structure.
 
 ---
 
-**Author:** Harsha Purohit
-**GitHub:** [@2004harsha](https://github.com/2004harsha)
+## Future Improvements
+
+* Add **data augmentation** for more robustness
+* Implement **transfer learning** using pre-trained CNNs like ResNet or EfficientNet
+* Build a **frontend dashboard** for deployment (Streamlit/Flask)
+* Train on more **real-world and larger datasets**
+
+---
+
+## Author
+
+**Harsha Purohit**
+GitHub: [@2004harsha](https://github.com/2004harsha)
+
+---
+
+## Disclaimer
+
+This project is intended for academic and demonstration purposes. The model was trained on a specific dataset, and performance may vary with other data or real-world conditions.
