@@ -67,8 +67,9 @@ The model is compiled with:
 
 ## Training Summary
 
-* **Training Accuracy**: \~99%
-* **Validation Accuracy**: \~92%
+* **Training Accuracy**: ~99%
+* **Validation Accuracy**: ~93%
+* **Test Accuracy**: ~93.27%
 * **Smooth training convergence**, minimal overfitting
 
 Training and validation graphs (accuracy and loss) are included in the notebook.
